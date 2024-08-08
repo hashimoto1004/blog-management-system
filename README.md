@@ -8,12 +8,12 @@ https://blog-management-system-o636.onrender.com/
 
 # 環境構築
 
-## データベース作成
+## データベース作成(60m)
 
 pgAdmin4 で `blog-system` というデータベースを作成してください。
 ユーザー名とパスワードは`postgres`という名称で作成してください。
 
-## テーブル作成
+## テーブル作成(90m)
 
 データベース`blog-system` に `Blog` テーブルを`resources/db/create_blogs_table.sql`に下記のカラムを用意し作成してください。
 
@@ -31,21 +31,21 @@ pgAdmin4 で `blog-system` というデータベースを作成してくださ�
 
 以下の手順でブログ記事の一覧取得機能を作成していきましょう。
 
-## Entity
+## Entity(60m)
 
 `Blog` テーブルのカラムに合うように Entity を実装してください。
 併せて Getter,Setter を用意してください。
 
 Entity ディレクトリに`Blog.java`を作成してください。
 
-## Repository の interface
+## Repository の interface(60m)
 
 データベースへの一覧取得機能の interface を作成してください。
 
 repository ディレクトリに`BlogRepository.java`を作成してください。
 `list`という名称で 引数はなしで全ての Blog オブジェクトを返却してください。
 
-## Repository の実装
+## Repository の実装(120m)
 
 データベースへの一覧取得機能を実装してください
 
@@ -60,7 +60,7 @@ repository ディレクトリに`BlogRepositoryImpl.java`を作成してくだ�
 
 try-with-resources 構文を使用して、リソースを自動的にクローズするようにしてみましょう。
 
-## Service
+## Service(60m)
 
 サービスロジックを作成してください。
 
@@ -72,13 +72,13 @@ RepositoryImpl の`list`メソッドを呼び出して、全ての Blog オブ�
 
 @Autowired アノテーションを使用して、実装してみよう
 
-## Controller
+## Controller(120m)
 
 Service の`list`メソッドを呼び出して、全ての Blog オブジェクトを View に渡してください。
 
 遷移先は`blog/list`になります。
 
-## 動作確認
+## 動作確認(60m)
 
 期待通りに登録されたデータが全取得できているか確認しましょう。
 
@@ -98,32 +98,32 @@ VALUES
 
 以下の手順でブログ記事の作成機能を作成していきましょう。
 
-## Form
+## Form(90m)
 
 ユーザーからの入力データを受け取る Form クラスを作成してください。
 
 form ディレクトリに`BlogForm.java`を作成してください。  
 どのフィールドを定義するか考えてみてください。
 
-## Repository
+## Repository(90m)
 
 データベースへの保存機能の interface を作成してください。
 
 `save`という名称で Blog Entity を受け取り、空を返却するメソッドを作成してください。
 
-## Repository 実装
+## Repository 実装(120m)
 
 先ほど interface で定義した内容を実装してください。
 
 タイトルと内容を保存するクエリを作成してください。
 
-## Service
+## Service(90m)
 
 サービスロジックを作成してください。
 
 Form から Entity に詰め直して保存するように実装してください
 
-## Controller（Get リクエスト）
+## Controller（Get リクエスト）(90m)
 
 ブログ作成画面のリクエストが来た際にフォームをレスポンスする実装をしてください。
 
@@ -131,7 +131,7 @@ Form から Entity に詰め直して保存するように実装してくださ�
 
 `blog/form`を view を返却してください。
 
-## Controller（Post リクエスト）
+## Controller（Post リクエスト）(120m)
 
 ブログ作成のリクエストが来た際に保存する実装をしてください。
 
@@ -139,7 +139,7 @@ Form から Entity に詰め直して保存するように実装してくださ�
 
 `blog/list`を view を返却してください。
 
-## 動作確認
+## 動作確認(60m)
 
 `localhost:8080/blogs`にアクセスして、新しいブログを作成ボタンを押下してください。
 タイトルと内容を入力して保存ボタンを押下してください。
@@ -149,23 +149,23 @@ Form から Entity に詰め直して保存するように実装してくださ�
 
 以下の手順でブログ記事の更新機能を作成していきましょう。
 
-## Repository
+## Repository(60m)
 
 `update`という名称で Blog Entity を受け取り、空を返却するメソッドを作成してください。
 
-## Repository 実装
+## Repository 実装(90m)
 
 先ほど interface で定義した内容を実装してください。
 
 タイトルと内容を更新するクエリを作成し、更新日時を現在時刻に設定してください。
 
-## Service
+## Service(90m)
 
 サービスロジックを作成してください。
 
 Form から Entity に詰め直して更新するように実装してください。
 
-## Controller（Get リクエスト）
+## Controller（Get リクエスト）(90m)
 
 ブログ更新画面のリクエストが来た際に、既存のデータをフォームに表示する実装をしてください。
 
@@ -173,7 +173,7 @@ Form から Entity に詰め直して更新するように実装してくださ�
 
 `blog/form`を view を返却してください。
 
-## Controller（Post リクエスト）
+## Controller（Post リクエスト）(90m)
 
 ブログ更新のリクエストが来た際に保存する実装をしてください。
 
@@ -181,7 +181,7 @@ Form から Entity に詰め直して更新するように実装してくださ�
 
 `blog/list`を view を返却してください。
 
-## 動作確認
+## 動作確認(60m)
 
 `localhost:8080/blogs`にアクセスして、既存のデータのタイトルを押下して、詳細画面に遷移してください。編集ボタンを押下して、更新画面に遷移してください。
 
@@ -195,25 +195,25 @@ Form から Entity に詰め直して更新するように実装してくださ�
 
 以下の手順でブログ記事の削除機能を作成していきましょう。
 
-## Repository
+## Repository(60m)
 
 データベースへの削除機能の interface を作成してください。
 
 `delete`という名称で Blog の ID を受け取り、空を返却するメソッドを作成してください。
 
-## Repository 実装
+## Repository 実装(90m)
 
 先ほど interface で定義した内容を実装してください。
 
 削除日時を現在時刻に設定するクエリを作成してください。
 
-## Service
+## Service(90m)
 
 サービスロジックを作成してください。
 
 削除リクエストを受け取り、Repository の delete メソッドを呼び出す実装をしてください。
 
-## Controller
+## Controller(90m)
 
 削除リクエストが来た際に、削除処理を行う実装をしてください。
 
@@ -221,15 +221,17 @@ Form から Entity に詰め直して更新するように実装してくださ�
 
 削除後は`blog/list`を view を返却してください。
 
-## 動作確認
+## 動作確認(60m)
 
 `localhost:8080/blogs`にアクセスして、詳細画面に遷移してください。
 削除ボタンを押下してください
 
 一覧画面に遷移して、該当の情報が削除されていたら正常に実装ができております。
 
-# 提出
+# 提出(60m)
 
 課題お疲れ様でした！
 CRUD 処理の基本は理解できたでしょうか？
 新規レポジトリを作成し、public 状態にして URL を教育担当者に共有をお願いします！
+
+合計 32.5 時間
