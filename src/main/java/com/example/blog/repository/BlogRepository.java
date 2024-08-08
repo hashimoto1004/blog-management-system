@@ -13,4 +13,6 @@ public interface BlogRepository {
     void update(Blog blog);
 
     void delete(Integer id);
+
+    int countByTitle(String title);
 }
