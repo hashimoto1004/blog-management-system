@@ -27,6 +27,24 @@ pgAdmin4 で `blog-system` というデータベースを作成してくださ�
 制約に関しては必要であれば設定してください。
 また、作成日時と更新日時はデフォルトで現在時刻をセットするようにしてください。
 
+### 挑戦
+
+削除日時がある理由を調べてみよう！
+
+## ディレクトリ作成
+
+`blog-management-system/src/main/java/com/example/blog`配下に下記のディレクトリ構成になるように作成してください。
+
+```
+└── blog
+    ├── BlogApplication.java
+    ├── controller
+    ├── entity
+    ├── repository
+    ├── service
+    └── util
+```
+
 # ブログ一覧取得機能
 
 以下の手順でブログ記事の一覧取得機能を作成していきましょう。
@@ -92,7 +110,7 @@ VALUES
 ('Third Blog', 'Content of the third blog', CURRENT_TIMESTAMP + INTERVAL '1 hour');
 ```
 
-`localhost:8080/blogs`にアクセスして、2 件取得できることを確認できたら正常に実装ができています！
+サーバーを起動して、`localhost:8080/blogs`にアクセスして、2 件取得できることを確認できたら正常に実装ができています！
 
 # ブログ記事作成機能
 
