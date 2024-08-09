@@ -1,7 +1,10 @@
 package com.example.blog.repository;
 
 import com.example.blog.entity.Blog;
+import com.example.blog.exception.DatabaseException;
 import com.example.blog.util.DatabaseUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -16,6 +19,9 @@ import java.util.List;
 @Repository
 public class BlogRepositoryImpl implements BlogRepository {
 
+    @Autowired
+    private DatabaseUtil databaseUtil;
+
     @Override
     public List<Blog> findAll() {
         List<Blog> blogs = new ArrayList<>();
@@ -24,7 +30,7 @@ public class BlogRepositoryImpl implements BlogRepository {
                 "WHERE deleted_at IS NULL " +
                 "ORDER BY id DESC";
 
-        try (Connection conn = DatabaseUtil.getConnection();
+        try (Connection conn = databaseUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery()) {
 
@@ -43,6 +49,7 @@ public class BlogRepositoryImpl implements BlogRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DatabaseException("データベースでエラーです。");
         }
 
         return blogs;
@@ -55,7 +62,7 @@ public class BlogRepositoryImpl implements BlogRepository {
                 "FROM blogs " +
                 "WHERE id = ? AND deleted_at IS NULL";
 
-        try (Connection conn = DatabaseUtil.getConnection();
+        try (Connection conn = databaseUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
@@ -75,6 +82,7 @@ public class BlogRepositoryImpl implements BlogRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DatabaseException("データベースでエラーです。");
         }
 
         return blog;
@@ -84,7 +92,7 @@ public class BlogRepositoryImpl implements BlogRepository {
     public void save(Blog blog) {
         String sql = "INSERT INTO blogs (title, content) VALUES (?, ?)";
 
-        try (Connection conn = DatabaseUtil.getConnection();
+        try (Connection conn = databaseUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, blog.getTitle());
@@ -93,6 +101,7 @@ public class BlogRepositoryImpl implements BlogRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DatabaseException("データベースでエラーです。");
         }
     }
 
@@ -100,7 +109,7 @@ public class BlogRepositoryImpl implements BlogRepository {
     public void update(Blog blog) {
         String sql = "UPDATE blogs SET title = ?, content = ?, updated_at = ? WHERE id = ?";
 
-        try (Connection conn = DatabaseUtil.getConnection();
+        try (Connection conn = databaseUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, blog.getTitle());
@@ -111,6 +120,7 @@ public class BlogRepositoryImpl implements BlogRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DatabaseException("データベースでエラーです。");
         }
     }
 
@@ -118,7 +128,7 @@ public class BlogRepositoryImpl implements BlogRepository {
     public void delete(Integer id) {
         String sql = "UPDATE blogs SET deleted_at = NOW() WHERE id = ?";
 
-        try (Connection conn = DatabaseUtil.getConnection();
+        try (Connection conn = databaseUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
@@ -126,6 +136,30 @@ public class BlogRepositoryImpl implements BlogRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DatabaseException("データベースでエラーです。");
         }
+    }
+
+    @Override
+    public int countByTitle(String title) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM blogs WHERE title = ? AND deleted_at IS NULL";
+
+        try (Connection conn = databaseUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, title);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseException("データベースでエラーです。");
+        }
+
+        return count;
     }
 }

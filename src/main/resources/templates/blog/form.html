@@ -10,18 +10,17 @@
 <div th:include="header"></div>
 <div class="container mt-5">
     <form th:object="${blog}" th:action="${blog.id == null} ? @{/blogs} : @{/blogs/{id}/edit(id=${blog.id})}" method="post">
-        <div th:if="${databaseError}" class="text-danger" th:text="${titleError}"></div>
         <div class="form-group">
             <label for="title">タイトル:</label>
             <input type="text" id="title" th:field="*{title}" class="form-control"/>
-            <div th:if="${titleEmptyError}" class="text-danger" th:text="${titleDuplicateError}"></div>
+            <div th:if="${titleEmptyError}" class="text-danger" th:text="${titleEmptyError}"></div>
             <div th:if="${titleDuplicateError}" class="text-danger" th:text="${titleDuplicateError}"></div>
 
         </div>
         <div class="form-group">
             <label for="content">コンテンツ:</label>
             <textarea id="content" th:field="*{content}" class="form-control"></textarea>
-            <div th:if="${contentEmptyError}" class="text-danger" th:text="${contentDuplicateError}"></div>
+            <div th:if="${contentEmptyError}" class="text-danger" th:text="${contentEmptyError}"></div>
         </div>
         <div class="form-group text-left">
             <button type="submit" class="btn btn-primary">保存</button>
