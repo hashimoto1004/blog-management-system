@@ -2,6 +2,7 @@ package com.example.blog.controller;
 
 import com.example.blog.entity.Blog;
 import com.example.blog.exception.ContentEmptyException;
+import com.example.blog.exception.NotFoundException;
 import com.example.blog.exception.TitleDuplicationException;
 import com.example.blog.exception.TitleEmptyException;
 import com.example.blog.form.BlogForm;
@@ -25,7 +26,7 @@ public class BlogController {
         try {
             blogs = blogService.findAll();
         } catch (Exception e) {
-            return "error";
+            return "500Error";
         }
 
         model.addAttribute("blogs", blogs);
@@ -36,9 +37,11 @@ public class BlogController {
     public String detail(@PathVariable Integer id, Model model) {
         Blog blog;
         try {
-            blog = blogService.findById(id);
+            blog = blogService.detail(id);
+        } catch (NotFoundException e) {
+            return "404Error";
         } catch (Exception e) {
-            return "error";
+            return "500Error";
         }
 
         model.addAttribute("blog", blog);
@@ -69,7 +72,7 @@ public class BlogController {
             model.addAttribute("blog", blog);
             return "blog/form";
         } catch (Exception e) {
-            return "error";
+            return "500Error";
         }
 
         return "redirect:/blogs";
@@ -79,9 +82,9 @@ public class BlogController {
     public String editForm(@PathVariable Integer id, Model model) {
         Blog blog;
         try {
-            blog = blogService.findById(id);
+            blog = blogService.detail(id);
         } catch (Exception e) {
-            return "error";
+            return "500Error";
         }
 
         model.addAttribute("blog", blog);
@@ -94,7 +97,7 @@ public class BlogController {
         try {
             blogService.updateBlog(id, blog);
         } catch (Exception e) {
-            return "error";
+            return "500Error";
         }
 
         blogService.updateBlog(id, blog);
@@ -107,7 +110,7 @@ public class BlogController {
         try {
             blogService.delete(id);
         } catch (Exception e) {
-            return "error";
+            return "500Error";
         }
 
         return "redirect:/blogs";

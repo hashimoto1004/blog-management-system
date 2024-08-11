@@ -2,6 +2,7 @@ package com.example.blog.repository;
 
 import com.example.blog.entity.Blog;
 import com.example.blog.exception.DatabaseException;
+import com.example.blog.exception.NotFoundException;
 import com.example.blog.util.DatabaseUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,10 @@ public class BlogRepositoryImpl implements BlogRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DatabaseException("データベースでエラーです。");
+        }
+
+        if (blog == null) {
+            throw new NotFoundException("データが見つかりませんでした。");
         }
 
         return blog;
