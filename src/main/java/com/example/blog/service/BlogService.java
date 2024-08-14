@@ -2,7 +2,6 @@ package com.example.blog.service;
 
 import com.example.blog.entity.Blog;
 import com.example.blog.exception.ContentEmptyException;
-import com.example.blog.exception.DatabaseException;
 import com.example.blog.exception.TitleDuplicationException;
 import com.example.blog.exception.TitleEmptyException;
 import com.example.blog.form.BlogForm;
@@ -21,7 +20,7 @@ public class BlogService {
         return blogRepository.findAll();
     }
 
-    public Blog findById(Integer id) {
+    public Blog detail(Integer id) {
         return blogRepository.findById(id);
     }
 
