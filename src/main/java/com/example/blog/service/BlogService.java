@@ -1,9 +1,6 @@
 package com.example.blog.service;
 
 import com.example.blog.entity.Blog;
-import com.example.blog.exception.ContentEmptyException;
-import com.example.blog.exception.TitleDuplicationException;
-import com.example.blog.exception.TitleEmptyException;
 import com.example.blog.form.BlogForm;
 import com.example.blog.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,7 @@ public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
-    public List<Blog> findAll() {
+    public List<Blog> list() {
         return blogRepository.findAll();
     }
 
@@ -24,19 +21,7 @@ public class BlogService {
         return blogRepository.findById(id);
     }
 
-    public void createBlog(BlogForm form) {
-        if (isTitleEmpty(form.getTitle())) {
-            throw new TitleEmptyException("タイトルは必須です。");
-        }
-
-        if (isTitleDuplicate(form.getTitle())) {
-            throw new TitleDuplicationException("タイトルが重複しています。");
-        }
-
-        if (isContentEmpty(form.getContent())) {
-            throw new ContentEmptyException("コンテンツは必須です。");
-        }
-
+    public void create(BlogForm form) {
         Blog blog = new Blog();
         blog.setTitle(form.getTitle());
         blog.setContent(form.getContent());
@@ -44,7 +29,7 @@ public class BlogService {
         blogRepository.save(blog);
     }
 
-    public void updateBlog(Integer id, BlogForm form) {
+    public void update(Integer id, BlogForm form) {
         Blog blog = new Blog();
         blog.setId(id);
         blog.setTitle(form.getTitle());
@@ -56,18 +41,6 @@ public class BlogService {
 
     public void delete(Integer id) {
         blogRepository.delete(id);
-    }
-
-    public boolean isTitleEmpty(String title) {
-        return title.isEmpty();
-    }
-
-    public boolean isContentEmpty(String content) {
-        return content.isEmpty();
-    }
-
-    public boolean isTitleDuplicate(String title) {
-        return blogRepository.countByTitle(title) > 0;
     }
 
 }
