@@ -18,14 +18,14 @@ public class BlogController {
 
     @GetMapping
     public String list(Model model) {
-        List<Blog> blogs = blogService.findAll();
+        List<Blog> blogs = blogService.list();
         model.addAttribute("blogs", blogs);
         return "blog/list";
     }
 
     @GetMapping("/{id}")
     public String detail(@PathVariable Integer id, Model model) {
-        Blog blog = blogService.findById(id);
+        Blog blog = blogService.detail(id);
         model.addAttribute("blog", blog);
 
         return "blog/detail";
@@ -40,14 +40,14 @@ public class BlogController {
 
     @PostMapping
     public String create(@ModelAttribute BlogForm blog, Model model) {
-        blogService.createBlog(blog);
+        blogService.create(blog);
 
         return "redirect:/blogs";
     }
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Integer id, Model model) {
-        Blog blog = blogService.findById(id);
+        Blog blog = blogService.detail(id);
         model.addAttribute("blog", blog);
 
         return "blog/form";
@@ -55,7 +55,7 @@ public class BlogController {
 
     @PostMapping("/{id}/edit")
     public String update(@PathVariable Integer id, @ModelAttribute BlogForm blog) {
-        blogService.updateBlog(id, blog);
+        blogService.update(id, blog);
 
         return "redirect:/blogs/" + id;
     }

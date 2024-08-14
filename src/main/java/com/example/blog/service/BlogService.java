@@ -13,15 +13,15 @@ public class BlogService {
     @Autowired
     private BlogRepository blogRepository;
 
-    public List<Blog> findAll() {
+    public List<Blog> list() {
         return blogRepository.findAll();
     }
 
-    public Blog findById(Integer id) {
+    public Blog detail(Integer id) {
         return blogRepository.findById(id);
     }
 
-    public void createBlog(BlogForm form) {
+    public void create(BlogForm form) {
         Blog blog = new Blog();
         blog.setTitle(form.getTitle());
         blog.setContent(form.getContent());
@@ -29,7 +29,7 @@ public class BlogService {
         blogRepository.save(blog);
     }
 
-    public void updateBlog(Integer id, BlogForm form) {
+    public void update(Integer id, BlogForm form) {
         Blog blog = new Blog();
         blog.setId(id);
         blog.setTitle(form.getTitle());
