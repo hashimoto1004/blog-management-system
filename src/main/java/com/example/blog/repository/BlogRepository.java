@@ -4,13 +4,13 @@ import com.example.blog.entity.Blog;
 import java.util.List;
 
 public interface BlogRepository {
-    List<Blog> findAll();
+  List<Blog> findAll();
 
-    Blog findById(Integer id);
+  Blog findById(Integer id);
 
-    void save(Blog blog);
+  void save(Blog blog);
 
-    void update(Blog blog);
+  void update(Blog blog);
 
-    void delete(Integer id);
+  void delete(Integer id);
 }
