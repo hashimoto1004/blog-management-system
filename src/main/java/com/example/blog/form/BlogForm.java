@@ -1,7 +1,6 @@
 package com.example.blog.form;
 
 import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class BlogForm {
-    private Integer id;
+  private Integer id;
 
-    private String title;
+  private String title;
 
-    private String content;
+  private String content;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 }
